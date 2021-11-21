@@ -13,10 +13,17 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class DeliveryCard {
 
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    String date = LocalDate.now().plusWeeks(2).toString();
+    String formatDate = String.format(date, formatter);
+
+
     @Test
     void taskOne() {
         open("http://localhost:9999/");
         $("[data-test-id=city] input").setValue("Петропавловск-Камчатский"); //город
+        $("[data-test-id=date] input").clear(); //очитка поля дата
         $("[data-test-id=date] input").setValue(formatDate); //дата
         $("[data-test-id=name] input").setValue("Иванов Владимир"); // ФИО
         $("[data-test-id=phone] input").setValue("+79163334455"); // telefon number
@@ -26,12 +33,5 @@ public class DeliveryCard {
         $(withText("Успешно")).shouldBe(visible, Duration.ofSeconds(50));
 
     }
-
-
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-    String date = LocalDate.now().plusWeeks(2).toString();
-    String formatDate = String.format(date, formatter);
-
-
 
 }
